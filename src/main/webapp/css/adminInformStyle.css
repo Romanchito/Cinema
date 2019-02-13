@@ -1,0 +1,31 @@
+.mainInformBlock{
+    background-color: rgba(255, 255, 255, 0.99);
+    margin-top:10%;
+    display: block;
+    margin-left: 5% ;
+    width: 90%;
+    position: center;
+}
+
+.informBlock{
+    display: inline-block;
+    height: 40%;
+
+ }
+
+.informScrollBlock{
+    display: inline-block;
+    height: 100px;
+    background-color: #0f0f0f;
+    overflow: auto;
+}
+
+.addBlock{
+    display: inline-block;
+    background-color: rgba(233, 239, 232, 0.99);
+    margin-left:10%;
+    width: 30%;
+    padding: 2% 2% 2% 2%;
+    border-radius: 10px;
+
+}

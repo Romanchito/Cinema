@@ -1,0 +1,8 @@
+com\cinema\controllers\HomeController.class
+com\cinema\dao\DAOable.class
+com\cinema\dao\UserDaoImpl.class
+com\cinema\services\UserServiceImpl.class
+com\cinema\controllers\AuthController.class
+com\cinema\dao\UserDAOable.class
+com\cinema\services\interfaces\Servicable.class
+com\cinema\entities\User.class

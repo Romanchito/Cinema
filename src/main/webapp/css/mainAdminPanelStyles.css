@@ -1,0 +1,22 @@
+.mainMenuBlock{
+    display: block;
+    margin-left: 17% ;
+    margin-top: 5%;
+    width: 70%;
+    position: center;
+}
+
+.menuBlock{
+
+    display: inline-block;
+    justify-content: flex-start;
+    border-radius: 3%;
+    overflow: hidden;
+    width: 23%;
+    height: 20%;
+    background-color: #000000;
+    color: #ffefe4;
+    text-align: center;
+    font-size: 25px;
+    padding-top: 6%;
+}

@@ -1,0 +1,98 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <context:component-scan base-package="com.cinema.controllers , com.cinema.validators"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- Database configuration -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+        <property name="username" value="admen"/>
+        <property name="password" value="qwerty"/>
+    </bean>
+
+    <!-- Hibernate 5 SessionFactory -->
+    <bean id="hibernate5AnnotatedSessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.cinema.entities.HoldersOfDiscount</value>
+                <value>com.cinema.entities.User</value>
+                <value>com.cinema.entities.Discount</value>
+                <value>com.cinema.entities.Film</value>
+                <value>com.cinema.entities.Images</value>
+                <value>com.cinema.entities.CinemaHall</value>
+                <value>com.cinema.entities.Place</value>
+                <value>com.cinema.entities.OperationOfCinema</value>
+                <value>com.cinema.entities.Session</value>
+
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--Validators beans -->
+    <bean id="authValidator" class="com.cinema.validators.UserAuthValidator"/>
+    <bean id="userUpdateValidator" class="com.cinema.validators.UserUpdateValidator"/>
+    <bean id="sessionValidator" class="com.cinema.validators.SessionValidator"/>
+    <bean id="placeValidator" class="com.cinema.validators.PlaceValidator"/>
+    <bean id="filmValidator" class="com.cinema.validators.FilmValidator"/>
+    <bean id="discountValidator" class="com.cinema.validators.DiscountValidator"/>
+    <bean id="cinemaHallValidator" class="com.cinema.validators.CinemaHallValidator"/>
+    <!-- Dao and Service beans -->
+
+    <bean id="userDao" class="com.cinema.dao.UserDaoImpl"/>
+    <bean id="discountDao" class="com.cinema.dao.DiscountDaoImpl"/>
+    <bean id="holderOfDiscountDao" class="com.cinema.dao.HoldersOfDiscountDaoImpl"/>
+    <bean id="filmDao" class="com.cinema.dao.FilmDaoImpl"/>
+    <bean id="placeDao" class="com.cinema.dao.PlaceDaoImpl"/>
+    <bean id="cinemaHallDao" class="com.cinema.dao.CinemaHallDaoImpl"/>
+    <bean id="sessionDao" class="com.cinema.dao.SessionDaoImpl"/>
+    <bean id="operationDao" class="com.cinema.dao.OperationOfCinemaDaoImpl"/>
+    <bean id="imageDao" class="com.cinema.dao.ImageDaoImpl"/>
+
+
+
+    <bean id="userService" class="com.cinema.services.UserServiceImpl"/>
+    <bean id="discountService" class="com.cinema.services.DiscountServiceImpl"/>
+    <bean id="holdersOfDiscountService" class="com.cinema.services.HoldersOfDiscountsServiceImpl"/>
+    <bean id="filmService" class="com.cinema.services.FilmServiceImpl"/>
+    <bean id="placeService" class="com.cinema.services.PlaceServiceImpl"/>
+    <bean id="cinemaHallService" class="com.cinema.services.CinemaHallServiceImpl"/>
+    <bean id="sessionService" class="com.cinema.services.SessionServiceImpl"/>
+    <bean id="operationService" class="com.cinema.services.OperationOfCinemaServiceImpl"/>
+    <bean id="imageService" class="com.cinema.services.ImageServiceImpl"/>
+
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:validation</value>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+    <tx:annotation-driven transaction-manager = "transactionManager"/>
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
+    </bean>
+</beans>
